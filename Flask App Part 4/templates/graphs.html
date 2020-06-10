@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Here is your report</h3>
+
+
+<div class="content-section">
+	<fieldset class="form-group">
+                <legend class="border-bottom mb-4">Performance Graph</legend>
+                <div class="form-group">
+					<embed type="image/svg+xml" src={{graph_data|safe}} style='max-width:800px'/>
+				</div>
+	</fieldset>			
+</div>
+
+<style>
+		.content-table{
+			border-collapse: collapse;
+			margin: 25px 0;
+			font-size: 0.9em;
+			min-width: 400px;
+			border-radius: 5px 5px 0 0;
+			overflow: hidden;
+			box-shadow: 0 0 20px rgba(0,0,0,0.15);
+		}
+
+		.content-table thead tr{
+			background-color: #5f788a;
+			color: #ffffff;
+			text-align: left;
+			font-weight: bold;
+		}
+			
+		.content-table th, 	
+		.content-table td {
+			padding: 12px 15px;
+		}
+
+
+		.content-table body tr{
+			border-bottom: 1px solid #dddddd;
+		}
+			
+		.content-table tbody tr:nth-of-type(even){
+			background-color: #f3f3f3;	
+		}
+
+		.content-table tbody tr:last-of-type{
+			border-bottom: 2px solid #5f788a;
+		}
+
+		.content-table tbody tr.active-row {
+		  	font-weight: bold;
+		  	color: #5f788a;
+		}
+
+	</style>	
+
+
+<div class="content-section">
+	<fieldset class="form-group">
+                <legend class="border-bottom mb-4">Performance Review</legend>
+                <div class="form-group">
+					<table class="content-table">
+                		<thead>
+                			<tr>    
+                				<th scope="col">Sem</th>
+                				<th scope="col">SGPA</th>
+            					<th scope="col">Remarks</th>
+            				</tr>
+            			</thead>
+            			<tbody>
+            			{% for d in df1 %}
+            			<tr>
+            			  <td><h5>{{d['Sem']}}</h5></td>
+            			  <td><h5>{{d['SGPA']}}</h5></td>
+            			  <td><h5>{{d['Remarks']}}</h5></td>
+            			</tr>
+            			{% endfor %}
+            			</tbody>
+            		</table>	  
+				</div>
+	</fieldset>
+</div>					
+
+<div class="content-section">
+	<fieldset class="form-group">
+                <legend class="border-bottom mb-4">Desired Score</legend>
+                <div class="form-group" align="left">
+					<form name="inputscoring" action="/displaygraph" method="POST" style="width: 500px; margin: auto">
+						<label>Enter your desired score: </label>
+						<input type="text" name="desper" class="form-control" align="left">
+						<input class="btn btn-primary" type="submit" value="Enter" align="left">	
+					</form>
+					{% for dum in dummy %}
+						<h4>{{dum}}</h4>
+					{% endfor %}	
+				</div>
+	</fieldset>
+</div>					
+
+{% endblock %}
+
